@@ -1,0 +1,102 @@
+<head>
+  <title>eat-together</title>
+  <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
+</head>
+
+<template name="layout">
+<div class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{pathFor 'home'}}">Eat together</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{{pathFor 'host'}}">Hold middagsselskab</a></li>
+        <li class="active"><a href="{{pathFor 'dine'}}">Vær gæst</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {{> loginButtons }} <!-- here -->
+      </ul>
+    </div>
+  </div>
+</div>
+{{> yield}}
+</template>
+
+<template name="host">
+<div class="container">
+  {{#if currentUser}}
+  <form role=form>
+    <h1>New dinner</h1>
+    <div class="form-group">
+      <label for=inputTitle>Dinner title</label>
+      <input type="text" class="form-control" id="inputTitle" placeholder="Vegetarian dinner">
+    </div>
+    <div class="form-group">
+      <label for=inputWhen>When</label>
+      <input id="inputWhen" class="datetimepicker form-control">
+    </div>
+  </form>
+  {{else}}
+  <div>
+    <h3>You need to login to create or edit dinner events:</h3>
+    <br>
+    {{> login}}
+  </div>
+  {{/if}}
+  {{currentUser}}
+</div>
+</template>
+
+<template name="login">
+<div class=row>
+  <div class=col-xs-3>
+    <a onclick="Meteor.loginWithGoogle()" type="button" class="btn btn-block btn-primary login-btn"><i class="fa fa-google-plus fa-fw fa-2x"></i> <div>google<br>login</div></a>
+    </div><div class=col-xs-3>
+    <a onclick="Meteor.loginWithTwitter()" type="button" class="btn btn-block btn-primary login-btn"><i class="fa fa-twitter fa-fw fa-2x"></i> <div>twitter<br>login</div></a>
+    </div><div class=col-xs-3>
+    <a onclick="Meteor.loginWithFacebook()" type="button" class="btn btn-block btn-primary login-btn"><i class="fa fa-facebook fa-fw fa-2x"></i> <div>facebook<br>login</div></a>
+    </div><div class=col-xs-3>
+    <a onclick="Meteor.loginWithGithub()" type="button" class="btn btn-block btn-primary login-btn"><i class="fa fa-github-alt fa-fw fa-2x"></i> <div>github<br>login</div></a>
+  </div>
+</div>
+</template>
+
+<template name="dine">
+</template>
+
+<template name="home">
+<div class="container">
+  <div class="jumbotron">
+    <h1>Open dinner network</h1>
+  </div>
+
+  <ul>
+    <li>Sign up for dinners as guest</li>
+    <li>Arrange dinners</li>
+  </ul>
+  Invitér til middagsselskab, eller vær gæst<br>
+  - hjemmesiden håndterer tilmelding, praktisk information,<br>
+  giver gode råd, og holder styr på<br>
+  antal gange vært/gæst.
+
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Host</h3>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h3>Be a guest</h3>
+    </div>
+  </div>
+</div>
+{{greeting}}
+<input type="button" value="Click" />
+</template>
+

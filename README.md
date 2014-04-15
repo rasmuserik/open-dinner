@@ -1,0 +1,99 @@
+# Eat together
+
+- landing page
+  - site-title Eat together 
+  - header open dinner network.
+  - 3x testimonials/motivators, randomly choosen
+    - eat out
+      - go out and eat with new people and old friends
+    - host a dinner
+      - meet new friends and culture
+    - Going out with friends? 
+      - Research shows that alternating paying for eachother gives more joy than splitting the bill. Use eat-toghter.net to keep track of who is giving.
+    - cook together
+    - say thanks
+      - give a digital "I owe you a dinner", which can be used at other places too :)
+    - testimonials
+  - upcoming dinners | host
+    - upcoming-dinners: when/where, tags, menu, sign-up/status
+    - host 
+      - steps
+        - open the `host` page 
+        - find a day
+        - find a place - at your home, or find some to cook together with friends
+        - describe menu
+        - invite friends
+        - optionally: make it public on this site
+      - eat-together.net handles dinner signups, and keeps track of hosting/dining balance
+      - `create dinner`-button
+  - hr
+  - info
+    - about eat-together.net
+    - how it works
+    - contact
+- Profile (have to login to see it)
+  - Your info
+    - name / nickname (visible for all)
+    - dinner balance (visible for all)
+      - VERSION2: send an "I owe you dinner" to a friend
+    - gender male/female (visible for all)
+    - website/google+/facebook/linkedin/pinterest/... url (visible for all)
+    - fullname from login (visible for all / visible for people you have dined with / visible for hosts if you are guest, or guests if you are a host)
+    - contact info (visible for people you have dined with / visible for hosts if you are a guest, or guests if you are a host)
+    - dining preferences
+    - default location (hidden)
+  - My upcoming dinners (hidden)
+    - date, guest/host, cancelled?, link
+  - Past dinners (visible for all)
+    - date, guest/host, cancelled?, link
+  - VERSION2: dining network
+  - reviews by guests hosts / add review
+- Dinner
+  - host
+  - VERSION2 multible hosts, cook together, find co-host
+  - when (date frozen when published)
+  - VERSION2 image - choosen from list, or uploaded
+  - where (visible only for guests)
+    - general location, address/direction, phone, location on map
+    - maximum number of participants
+    - allergy warning: smoking, cats, dogs
+  - menu
+  - notes
+  - VERSION2 gender balanced requirement
+  - tags
+    - tags: no-meat, vegetarian, vegetarian-friendly, vegan, vegan-friendly, kids-friendly, no-kids, singles, couples
+    - new tags
+  - publish-button (or link to dinner event if published)
+  - visibility on site: immediately, in n days, only after event
+  - before or after dinner activity, let us (visible for all)
+    - (default) see what happens
+    - only eat
+    - have everybody bring a short activity, story, etc., present it during dinner, and choose what we do
+    - play games (board, or otherwise) `optional title/description`
+    - watch a movie, `optional title(s)`
+    - go out together `optionally where`
+    - jam, sing and dance
+    - `other activity`
+  - message+button:
+    - publish / cancel / uncancel (if host)
+    - signup / cancel (if guest and not happend more than a day ago)
+  - cancel event "description field (as comment to dinner), button- Remember to tell the participants
+  - info
+    - previous dinners with same host
+    - participants (including hosts, show if at least three participants), participant info w/ cancel option (logged in + hosting)
+    - comments / review
+
+
+## Notes
+- database
+  - dinners
+    - state: preparing, active, done, cancelled
+    - when
+    - description
+    - capacity
+- site
+  - /
+  - /dinner/:id
+  - /dinner/:id/admin
+  - /user/:id
+  - /user/:id/admin
