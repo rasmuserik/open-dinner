@@ -2,9 +2,7 @@
   "packages": {
     "leaflet": {},
     "iron-router": {},
-    "bootstrap-3": {},
     "font-awesome": {},
-    "moment": {},
-    "bootstrap3-datetimepicker": {}
+    "bootstrap-3": {}
   }
 }

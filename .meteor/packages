@@ -10,12 +10,10 @@ coffeescript
 stylus
 leaflet
 iron-router
-bootstrap-3
 accounts-github
 accounts-facebook
 accounts-twitter
 accounts-google
 font-awesome
-moment
-bootstrap3-datetimepicker
 accounts-ui
+bootstrap-3

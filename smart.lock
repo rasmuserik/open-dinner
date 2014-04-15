@@ -4,10 +4,8 @@
     "basePackages": {
       "leaflet": {},
       "iron-router": {},
-      "bootstrap-3": {},
       "font-awesome": {},
-      "moment": {},
-      "bootstrap3-datetimepicker": {}
+      "bootstrap-3": {}
     },
     "packages": {
       "leaflet": {
@@ -20,25 +18,15 @@
         "tag": "v0.7.0",
         "commit": "05f34bc48c4cad9fdaa366c1ddcabe6980232ece"
       },
-      "bootstrap-3": {
-        "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
-        "tag": "v3.1.1-1",
-        "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
-      },
       "font-awesome": {
         "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
         "tag": "v4.0.3",
         "commit": "61e9361384347547ae144f8228faa4deffda23db"
       },
-      "moment": {
-        "git": "https://github.com/acreeger/meteor-moment.git",
-        "tag": "v2.5.1",
-        "commit": "8c9bc5d3fc96705057737cb9743d555417f6e551"
-      },
-      "bootstrap3-datetimepicker": {
-        "git": "https://github.com/tsega/meteor-bootstrap3-datetimepicker.git",
-        "tag": "v0.0.5",
-        "commit": "30b5fa0759f98b75761772ad891876408f7cc8c4"
+      "bootstrap-3": {
+        "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
+        "tag": "v3.1.1-1",
+        "commit": "63dd38968828bb8963636df93e9a1c45e2dfe67e"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
