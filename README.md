@@ -1,5 +1,18 @@
-# Eat together
+# open dinner network - dinner.solsort.com
+open dining club
 
+# TODO
+
+- major
+  - html+design for all pages
+  - data bindings
+- minor
+  - configure logins on dinner.solsort.com
+  - scrollTo 1 onload
+  - change class for dinne list to something more sensible than upcoming
+  - change dinner list from table to something more responsive
+
+# Content notes
 - landing page
   - site-title Eat together 
   - header open dinner network.
@@ -84,7 +97,7 @@
     - comments / review
 
 
-## Notes
+# Notes
 - database
   - dinners
     - state: preparing, active, done, cancelled
@@ -94,6 +107,4 @@
 - site
   - /
   - /dinner/:id
-  - /dinner/:id/admin
   - /user/:id
-  - /user/:id/admin
