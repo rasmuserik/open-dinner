@@ -43,7 +43,7 @@ if Meteor.isClient #{{{1
     capacity: 12
     participants: ["fejnjnjfeabj", "njnjnjn"]
 
-  Template.profile.isMe = -> false
+  Template.profile.isMe = -> true
   Template.profile.dinnerCreditClass = -> "green" # "red"
   Template.profile.upcomingDinners = -> sampleDinners
   Template.profile.pastDinners = -> sampleDinners
@@ -63,6 +63,17 @@ if Meteor.isClient #{{{1
           name: "RasmusErik"
       }
     ]
+  Template.profile.rendered = ->
+    loadMap = ->
+      if document.getElementById "map"
+        loc = [55.6759400, 12.5655300]
+        map = L.map('map').setView(loc, 14)
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map)
+        L.marker(loc).addTo(map)
+    setTimeout loadMap, 1000
+
   Template.profile.profile = ->
       _id: "reblah"
       name: "RasmusErik"

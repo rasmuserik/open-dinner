@@ -151,7 +151,7 @@
 
   <h5>Dinner-credits &nbsp; <span class="{{dinnerCreditClass}}">{{profile.dinnerCredits}}</span></h5>
   {{#if isMe}}
-  <div>Increase number of dinner-credits by hosting dinners - each guest gives one dinner credit to the host</div>
+  <div>Increase number of dinner-credits by hosting dinners - each guest gives one dinner-credit to the host</div>
   {{/if}}
 
   <h5>Dining preferences</h5>
@@ -179,7 +179,9 @@
 
   {{#if isMe}}
   <h5>Default location</h5>
-  Only used for default value when creating new dinners.
+  Only visible for you, - used for default value when creating new dinners.
+  <div id=map>
+  </div>
   <div>Address:<div><textarea data-name=location.address>{{profile.location.address}}</textarea></div></div>
   <div>Maximun number of guests: <div><input type=number data-name=location.capacity value={{profile.location.capacity}}></div></div>
   <div>Allergy info:
@@ -190,6 +192,7 @@
   <hr/>
   {{#if upcomingDinners}}
   <h5>Upcoming dinners</h5>
+    {{#if isMe}}<input data-name=upcomingVisible type=checkbox checked={{profile.upcomingVisible}}> visible for people I have dined with. (Otherwise only visible for you).{{/if}}
   <div>
     <table class=upcoming>
       <tr>
@@ -214,12 +217,13 @@
       {{/each}}
     </table>
     <p>
-    <input data-name=upcomingVisible type=checkbox checked={{profile.upcomingVisible}}> visible for people I have dined with. (Otherwise only visible for you).
     </p>
   </div>
   {{/if}}
 
-  <h5>Past dinners</h5>
+  <h5>Past dinners
+    {{#if isMe}}(visible for all){{/if}}
+  </h5>
   <div>
     <table class=upcoming>
       <tr>
