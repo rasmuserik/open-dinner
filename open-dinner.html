@@ -1,5 +1,8 @@
 <head>
   <title>dinner.solsort.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="format-detection" content="telephone=no">
   <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css'>
   <script src="//ssl.solsort.com/_dinner.js"></script>
 </head>
@@ -125,6 +128,149 @@
 </template>
 
 <template name="profile">
+{{#if currentUser}}
+<div class="container profile">
+  <h1>{{profile.name}}</h1>
+  {{#if isMe}}
+  <h5>Name</h5>
+  <div>
+    <input data-name=name value="{{profile.name}}">
+  </div>
+  {{/if}}
+
+  {{#if profile.fullname}}
+  <h5>Identity</h5>
+  <div>{{profile.fullname}}</div>
+  <div><a href="{{profile.identity}}">{{profile.identity}}</a></div>
+  {{#if isMe}}
+  <div>
+    <input data-name=identityVisible type=checkbox checked={{profile.identityVisible}}> visible for all. (Otherwise only visible for hosts, and people I have dined with).
+  </div>
+  {{/if}}
+  {{/if}}
+
+  <h5>Dinner-credits &nbsp; <span class="{{dinnerCreditClass}}">{{profile.dinnerCredits}}</span></h5>
+  {{#if isMe}}
+  <div>Increase number of dinner-credits by hosting dinners - each guest gives one dinner credit to the host</div>
+  {{/if}}
+
+  <h5>Link to website</h5>
+  <div>
+    {{#if isMe}}
+    <input data-name=website value="{{profile.website}}">
+    {{else}}
+    <a href="{{profile.website}}">{{profile.website}}</a>
+    {{/if}}
+  </div>
+
+  <h5>Dining preferences</h5>
+  <div>
+    {{#if isMe}}
+    <textarea data-name=diningPreferences>{{profile.diningPreferences}}</textarea>
+    {{else}}
+    <span class=withNewlines>{{profile.diningPreferences}}</span>
+    {{/if}}
+  </div>
+
+  {{#if profile.contactInfo}}
+  <h5>Contact information</h5>
+  {{#if isMe}}
+  <div><textarea data-name=contactInfo>{{profile.contactInfo}}</textarea></div>
+  <div>
+    <input data-name=contactInfoVisible type=checkbox checked={{profile.contactInfoVisible}}> visible for people I have dined with. (Otherwise only visible for hosts, and people signed up for dinners I am hosting).
+  </div>
+  {{else}}
+  <div>
+    <span class=withNewlines>{{profile.contactInfo}}</span>
+  </div>
+  {{/if}}
+  {{/if}}
+
+  {{#if isMe}}
+  <h5>Default location</h5>
+  Only used for default value when creating new dinners.
+  <div>Address:<div><textarea data-name=location.address>{{profile.location.address}}</textarea></div></div>
+  <div>Maximun number of guests: <div><input type=number data-name=location.capacity value={{profile.location.capacity}}></div></div>
+  <div>Allergy info:
+    <input data-name=location.noPets type=checkbox checked={{profile.location.noPets}}> no pets &nbsp;
+    <input data-name=location.noSmoking type=checkbox checked={{profile.locatoin.noSmoking}}> no smoking
+  </div>
+  {{/if}}
+  <hr/>
+  {{#if upcomingDinners}}
+  <h5>Upcoming dinners</h5>
+  <div>
+    <table class=upcoming>
+      <tr>
+        <th>When</th>
+        <th>Where</th>
+        <th>Role</th>
+        <th>Tags</th>
+        <th>Menu</th>
+        <th></th>
+      </tr>
+      {{#each upcomingDinners}}
+      <tr>
+        <td>{{{this.date}}}<br>{{this.time}}</td>
+        <td>{{this.where}}</td>
+        <td>{{this.role}}</td>
+        <td>{{#each this.tags}}
+          <span class=tag>{{this}}</span>
+          {{/each}}</td>
+        <td>{{this.menu}}</td>
+        <td><a class="button" href="/dinner/{{this._id}}">info</a></td>
+      </tr>
+      {{/each}}
+    </table>
+    <p>
+    <input data-name=upcomingVisible type=checkbox checked={{profile.upcomingVisible}}> visible for people I have dined with. (Otherwise only visible for you).
+    </p>
+  </div>
+  {{/if}}
+
+  <h5>Past dinners</h5>
+  <div>
+    <table class=upcoming>
+      <tr>
+        <th>When</th>
+        <th>Where</th>
+        <th>Role</th>
+        <th>Tags</th>
+        <th>Menu</th>
+        <th></th>
+      </tr>
+      {{#each pastDinners}}
+      <tr>
+        <td>{{{this.date}}}<br>{{this.time}}</td>
+        <td>{{this.where}}</td>
+        <td>{{this.role}}</td>
+        <td>{{#each this.tags}}
+          <span class=tag>{{this}}</span>
+          {{/each}}</td>
+        <td>{{this.menu}}</td>
+        <td><a class="button" href="/dinner/{{this._id}}">info</a></td>
+      </tr>
+      {{/each}}
+    </table>
+  </div>
+</div>
+<!--
+Template.profile.isMe = -> true
+Template.profile.upcomingDinners = -> sampleDinners
+Template.profile.pastDinners = -> sampleDinners
+Template.profile.wall = -> [
+{
+text: "thanks for a wonderful dinner"
+date: "Sat Apr 9"
+from: {id: "foblah", name: "Hello"}
+}]
+-->
+{{else}}
+<div class="container needLogin">
+  <h2>You need to log in to access user profile:</h2>
+  {{> needLogin}}
+</div>
+{{/if}}
 </template>
 
 <template name="dinner">
@@ -134,32 +280,39 @@
   </div>
 </div>
 {{#if currentUser}}
+<div class="container">
 
+</div>
 {{else}}
 <div class="container needLogin">
   <h2>You need to log in to view and sign up for dinners:</h2>
-  <div class=row>
-    <div class="col-xs-3">
-      <a title="Google" href="#" class=button onclick="Meteor.loginWithGoogle()">
-        <i class="fa fa-google-plus fa-fw fa-2x float-left"></i> log in with <br/>google</a>
-    </div>
-    <div class="col-xs-3">
-      <a title="Twitter" href="#" class=button onclick="Meteor.loginWithTwitter()">
-        <i class="fa fa-twitter fa-fw fa-2x float-left"></i> log in with <br/>twitter</a>
-    </div>
-    <div class="col-xs-3">
-      <a title="Facebook" href="#" class=button onclick="Meteor.loginWithFacebook()">
-        <i class="fa fa-facebook fa-fw fa-2x float-left"></i> log in with <br/>facebook</a>
-    </div>
-    <div class="col-xs-3">
-      <a title="GitHub" href="#" class=button onclick="Meteor.loginWithGithub()">
-        <i class="fa fa-github fa-fw fa-2x float-left"></i> log in with <br/>github</a>
-    </div>
-  </div>
+  {{> needLogin}}
 </div>
-
 {{/if}}
 </template>
 
-<template name="login">
+<template name="needLogin">
+<div class=row>
+  <div class="col-xs-3">
+    <a title="Google" href="#" class=button onclick="Meteor.loginWithGoogle()">
+      <i class="fa fa-google-plus fa-fw fa-2x float-left"></i> log in with <br/>google</a>
+  </div>
+  <div class="col-xs-3">
+    <a title="Twitter" href="#" class=button onclick="Meteor.loginWithTwitter()">
+      <i class="fa fa-twitter fa-fw fa-2x float-left"></i> log in with <br/>twitter</a>
+  </div>
+  <div class="col-xs-3">
+    <a title="Facebook" href="#" class=button onclick="Meteor.loginWithFacebook()">
+      <i class="fa fa-facebook fa-fw fa-2x float-left"></i> log in with <br/>facebook</a>
+  </div>
+  <div class="col-xs-3">
+    <a title="GitHub" href="#" class=button onclick="Meteor.loginWithGithub()">
+      <i class="fa fa-github fa-fw fa-2x float-left"></i> log in with <br/>github</a>
+  </div>
+  <div class=row>
+    <div class="col-xs-12">
+      <p>Only used for logging in - we will never post anything.</p>
+    </div>
+  </div>
+</div>
 </template>

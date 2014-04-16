@@ -34,7 +34,7 @@
 - Profile (have to login to see it)
   - Your info
     - name / nickname (visible for all)
-    - dinner balance (visible for all)
+    - dinner credits (visible for all)
       - VERSION2: send an "I owe you dinner" to a friend
     - gender male/female (visible for all)
     - website/google+/facebook/linkedin/pinterest/... url (visible for all)
