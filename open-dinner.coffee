@@ -70,7 +70,6 @@ if Meteor.isClient #{{{1
       identity: "https://github.com/rasmuserik"
       identityVisible: true
       dinnerCredits: -3
-      website: "http://rasmuserik.net"
       contactInfo: "some@example.com\n+45 12345678"
       contactInfoVisible: true
       diningPreferences: "mostly vegetarian"
