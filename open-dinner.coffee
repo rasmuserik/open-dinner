@@ -1,13 +1,4 @@
-Dinners = new Meteor.Collection "Dinners"
-
-Router.configure
-  layoutTemplate: "layout"
-Router.map ->
-  this.route "home",
-    path: "/"
-  this.route "profile"
-  this.route "dinner"
-
+#{{{1 dummy data
 sampleDinners = [ {
       _id: "foo"
       date: "Thu Apr&nbsp;14"
@@ -20,7 +11,7 @@ sampleDinners = [ {
       capacity: 12
       participants: ["fejnjnjfeabj", "njnjnjn"]
     },{
-      _id: "foo"
+      _id: "bar"
       date: "Mon Apr&nbsp;28"
       time: "17:00"
       where: "København Nordvest"
@@ -31,6 +22,36 @@ sampleDinners = [ {
       capacity: 12
       participants: ["fejnjnjfeabj", "njnjnjn"]
     } ]
+#{{{1 setup database
+Dinners = new Meteor.Collection "Dinners"
+UserInfo = new Meteor.Collection "UserInfo"
+
+#{{{1 Router
+Router.configure
+  layoutTemplate: "layout"
+Router.map ->
+  this.route "home",
+    path: "/"
+  this.route "setup"
+  this.route "profile",
+    path: "/profile/:id?"
+    data: ->
+      id = this.params._id || Meteor.userId()
+      user = Meteor.users.findOne {_id: id}
+      return {} if !user
+      profile = user.profile
+      return {
+        isMe: Meteor.userId() == id
+        dinnerCreditClass: if user.profile.dinnerBalance < 0 then "red" else "green"
+        upcomingDinners: sampleDinners
+        pastDinners: sampleDinners
+        profile: user.profile
+      }
+  this.route "dinner",
+    path: "/dinner/:id?"
+    data: -> {}
+
+
 if Meteor.isClient #{{{1
   Template.home.upcoming = -> sampleDinners
   Template.dinner.dinner = ->
@@ -43,26 +64,7 @@ if Meteor.isClient #{{{1
     capacity: 12
     participants: ["fejnjnjfeabj", "njnjnjn"]
 
-  Template.profile.isMe = -> true
-  Template.profile.dinnerCreditClass = -> "green" # "red"
-  Template.profile.upcomingDinners = -> sampleDinners
-  Template.profile.pastDinners = -> sampleDinners
-  Template.profile.wall = -> [
-      {
-        text: "thanks for a wonderful dinner"
-        date: "Sat Apr 9"
-        from:
-          id: "foblah"
-          name: "Hello"
-      },
-      {
-        text: "bhbhbhb"
-        date: "Mon Apr 2"
-        from:
-          id: "reblah"
-          name: "RasmusErik"
-      }
-    ]
+  #{{{2 profile
   Template.profile.rendered = ->
     loadMap = ->
       if document.getElementById "map"
@@ -74,27 +76,41 @@ if Meteor.isClient #{{{1
         L.marker(loc).addTo(map)
     setTimeout loadMap, 1000
 
-  Template.profile.profile = ->
-      _id: "reblah"
-      name: "RasmusErik"
-      fullname: "Rasmus Erik Voel Jensen"
-      identity: "https://github.com/rasmuserik"
-      identityVisible: true
-      dinnerCredits: -3
-      contactInfo: "some@example.com\n+45 12345678"
-      contactInfoVisible: true
-      diningPreferences: "mostly vegetarian"
-      upcomingVisible: true
-      location:
-        address: "Someway 12\n4567 Somewhere"
+  Template.profile.events
+    "change .input": (event) ->
+      $elem = $(event.target)
+      name = $elem.data().name
+      if "checkbox" == $elem.attr "type"
+        value = if $elem.prop("checked") then true else false
+      else
+        value = $elem.val()
+      change = {$set: {}}
+      change.$set["profile.#{name}"] = value
+      console.log JSON.stringify change
+      Meteor.users.update {_id: Meteor.userId()}, change
+
+  Deps.autorun ->
+    user = Meteor.user()
+    return if ! user
+    profile = user.profile
+    if "number" != typeof profile.dinnerCredits
+      profile.nickname = profile.name
+      profile.identityVisible = true
+      profile.dinnerCredits = 0
+      profile.contactInfo = ""
+      profile.upcomingVisible = true
+      profile.diningPreferences = ""
+      profile.location =
+        address: "Someway 123\n4567 Somewhere"
         geocoordinates: [55.6759400, 12.5655300]
-        capacity: 12
+        capacity: 0
         noPets: false
         noSmoking: false
-
-
-        
-
+      if user.services.github
+        profile.identity = "https://github.com/#{user.services.github.username}"
+      else
+        alert "unknown service #{Object.keys user.services}"
+      Meteor.users.update {_id: user._id}, {$set: {profile: profile}}
 
 if Meteor.isServer #{{{1
   Meteor.startup ->
