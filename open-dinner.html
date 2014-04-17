@@ -166,14 +166,15 @@
     {{/if}}
   </div>
 
-  {{#if profile.contactInfo}}
-  <h5>Contact information</h5>
   {{#if isMe}}
+  <h5>Contact information</h5>
   <div><textarea class=input data-name=contactInfo>{{profile.contactInfo}}</textarea></div>
   <div>
     <input class=input data-name=contactInfoVisible type=checkbox checked={{profile.contactInfoVisible}}> visible for people I have dined with. (Otherwise only visible for hosts, and people signed up for dinners I am hosting).
   </div>
   {{else}}
+  {{#if profile.contactInfo}}
+  <h5>Contact information</h5>
   <div>
     <span class=withNewlines>{{profile.contactInfo}}</span>
   </div>
