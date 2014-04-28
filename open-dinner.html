@@ -77,7 +77,7 @@
             <span class=tag>{{this}}</span>
             {{/each}}</td>
           <td>{{this.menu}}</td>
-          <td><a class="button" href="/dinner/{{this._id}}">info</a></td>
+          <td><a class="button" href="{{pathFor 'dinner' _id=this._id}}">info</a></td>
         </tr>
         {{/each}}
       </table>
@@ -146,9 +146,9 @@
   <div>{{profile.name}}</div>
   <div><a href="{{profile.identity}}">{{profile.identity}}</a></div>
   {{#if isMe}}
-  <div>
+  <!--div>
     <input class=input data-name=identityVisible type=checkbox checked={{profile.identityVisible}}> visible for all. (Otherwise only visible for hosts, and people I have dined with).
-  </div>
+  </div-->
   {{/if}}
   {{/if}}
 
@@ -169,9 +169,9 @@
   {{#if isMe}}
   <h5>Contact information</h5>
   <div><textarea class=input data-name=contactInfo>{{profile.contactInfo}}</textarea></div>
-  <div>
+  <!--div>
     <input class=input data-name=contactInfoVisible type=checkbox checked={{profile.contactInfoVisible}}> visible for people I have dined with. (Otherwise only visible for hosts, and people signed up for dinners I am hosting).
-  </div>
+  </div-->
   {{else}}
   {{#if profile.contactInfo}}
   <h5>Contact information</h5>
@@ -183,9 +183,10 @@
 
   {{#if isMe}}
   <h5>Default location</h5>
-  Only visible for you, - used for default value when creating new dinners.
-  <div id=map>
-  </div>
+  <!--Only visible for you, - used for default value when creating new dinners.-->
+  <!--div id=map>
+  </div-->
+  <div>Area:<div><input class=input data-name=location.area value="{{profile.location.area}}"></div></div>
   <div>Address:<div><textarea class=input data-name=location.address>{{profile.location.address}}</textarea></div></div>
   <div>Maximun number of guests: <div><input class=input type=number data-name=location.capacity value={{profile.location.capacity}}></div></div>
   <div>Allergy info:
@@ -196,7 +197,7 @@
   <hr/>
   {{#if upcomingDinners}}
   <h5>Upcoming dinners</h5>
-    {{#if isMe}}<input class=input data-name=upcomingVisible type=checkbox checked={{profile.upcomingVisible}}> visible for people I have dined with. (Otherwise only visible for you).{{/if}}
+  {{#if isMe}}<!--<input class=input data-name=upcomingVisible type=checkbox checked={{profile.upcomingVisible}}> visible for people I have dined with. (Otherwise only visible for you).-->{{/if}}
   <div>
     <table class=upcoming>
       <tr>
@@ -216,7 +217,7 @@
           <span class=tag>{{this}}</span>
           {{/each}}</td>
         <td>{{this.menu}}</td>
-        <td><a class="button" href="/dinner/{{this._id}}">info</a></td>
+        <td><a class="button" href="{{pathFor 'dinner' _id=this._id}}">info</a></td>
       </tr>
       {{/each}}
     </table>
@@ -226,7 +227,9 @@
   {{/if}}
 
   <h5>Past dinners
+    <!--
     {{#if isMe}}(visible for all){{/if}}
+    -->
   </h5>
   <div>
     <table class=upcoming>
@@ -247,7 +250,7 @@
           <span class=tag>{{this}}</span>
           {{/each}}</td>
         <td>{{this.menu}}</td>
-        <td><a class="button" href="/dinner/{{this._id}}">info</a></td>
+        <td><a class="button" href="{{pathFor 'dinner' _id=this._id}}">info</a></td>
       </tr>
       {{/each}}
     </table>
@@ -280,7 +283,11 @@ from: {id: "foblah", name: "Hello"}
 </div>
 {{#if currentUser}}
 <div class="container">
-
+  <h2>Dinner {{{dinner.date}}} {{{dinner.time}}} in {{{dinner.location.area}}}</h2>
+  here
+  {{{dinner.location}}}
+  {{{dinner.menu}}}
+  <div>{{{dinner.location.capacity}}}</div>
 </div>
 {{else}}
 <div class="container needLogin">

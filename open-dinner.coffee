@@ -33,7 +33,7 @@ Router.map ->
   this.route "home",
     path: "/"
   this.route "setup"
-  this.route "profile",
+  this.route "profile", #{{{2
     path: "/profile/:id?"
     data: ->
       id = this.params._id || Meteor.userId()
@@ -47,22 +47,31 @@ Router.map ->
         pastDinners: sampleDinners
         profile: user.profile
       }
-  this.route "dinner",
-    path: "/dinner/:id?"
-    data: -> {}
 
+  this.route "dinner", #{{{2
+    path: "/dinner/:id?"
+    data: ->
+      id = this.params._id
+      dinner = Dinners.findOne({_id: id}) || {
+        date: "Thu Apr&nbsp;14"
+        time: "18:00"
+        tags: ["vegetarian"]
+        menu: "Tortilla"
+        when: new Date()
+        participants: [Meteor.userId()]
+        hosts: [Meteor.userId()]
+        location: Meteor.user()?.profile?.location || {}
+      }
+      isHost = (Meteor.userId() in dinner.hosts)
+      console.log dinner
+      return {
+        dinner: dinner
+        isGuest: (Meteor.userId() in dinner.participants) and !isHost
+        isHost: isHost
+      }
 
 if Meteor.isClient #{{{1
   Template.home.upcoming = -> sampleDinners
-  Template.dinner.dinner = ->
-    date: "Thu Apr&nbsp;14"
-    time: "18:00"
-    where: "Kbh.NV"
-    hosts: ["reblah"]
-    tags: ["vegetarian"]
-    menu: "Tortilla"
-    capacity: 12
-    participants: ["fejnjnjfeabj", "njnjnjn"]
 
   #{{{2 profile
   Template.profile.rendered = ->
